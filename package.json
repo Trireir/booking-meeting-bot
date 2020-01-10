@@ -4,7 +4,8 @@
   "description": "",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot.js"
+    "start": "node bot.js",
+    "deploy:ngrok": "ngrok http 3000"
   },
   "dependencies": {
     "botbuilder-adapter-slack": "^1.0.7",
