@@ -4,13 +4,14 @@
   "description": "",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot.js",
+    "start": "node bot.js"
   },
   "dependencies": {
     "botbuilder-adapter-slack": "^1.0.7",
-    "botbuilder-storage-mongodb": "^0.9.5",
     "botkit": "^4.6.0",
-    "botkit-plugin-cms": "^1.0.3",
     "dotenv": "^7.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0"
   }
 }
