@@ -1,35 +1,55 @@
-const { SlackDialog } = require('botbuilder-adapter-slack')
-
-const room = require('./fields/Room')
-const hour = require('./fields/Hour')
+const { RoomField, HourField, DateField } = require('./fields/index')
 
 module.exports = async function(bot, message) {
-  let dialog = new SlackDialog('Book a room', 'callback_123', 'Save', [
-    {
-      label: 'Title',
-      name: 'title',
-      placeholder: 'Title',
-      type: 'text',
-      min_length: 1,
-      max_length: 30,
+  const trigger_id = message.trigger_id
+  const response = await bot.api.views.open({
+    trigger_id: trigger_id,
+    view: {
+      type: 'modal',
+      title: {
+        type: 'plain_text',
+        text: 'Book a room',
+        emoji: true,
+      },
+      submit: {
+        type: 'plain_text',
+        text: 'Book',
+        emoji: true,
+      },
+      close: {
+        type: 'plain_text',
+        text: 'Cancel',
+        emoji: true,
+      },
+      blocks: [
+        {
+          type: 'input',
+          element: {
+            type: 'plain_text_input',
+            placeholder: {
+              type: 'plain_text',
+              text: 'Title',
+              emoji: true,
+            },
+          },
+          label: {
+            type: 'plain_text',
+            text: 'Title',
+            emoji: true,
+          },
+        },
+        RoomField([
+          { name: 'Tetris', id: '1' },
+          { name: 'Space Invaders', id: '2' },
+          { name: 'Mario Bros', id: '3' },
+        ]),
+        DateField(),
+        HourField('start'),
+        HourField('end'),
+      ],
     },
-    room([
-      { name: '1', id: '1' },
-      { name: '2', id: '2' },
-      { name: '3', id: '3' },
-    ]),
-    {
-      label: 'Date',
-      name: 'date',
-      placeholder: 'dd/mm/yyyy',
-      min_length: 10,
-      max_length: 10,
-      type: 'text',
-    },
-    hour('start'),
-    hour('end'),
-  ])
+  })
 
   await bot.replyPrivate(message, 'It seems you want to book a meeting room...')
-  await bot.replyWithDialog(message, dialog.asObject())
+  await bot.replyPrivate(message, response)
 }

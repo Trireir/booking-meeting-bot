@@ -2,19 +2,35 @@ function generateHours() {
   const options = []
   for (let i = 8; i <= 19; i++) {
     options.push({
-      label: `${i}:00`,
-      value: `${i}:00`,
+      text: {
+        type: 'plain_text',
+        text: `${i}:00`,
+        emoji: true,
+      },
+      value: '`${i}:00`',
     })
     options.push({
-      label: `${i}:15`,
+      text: {
+        type: 'plain_text',
+        text: `${i}:15`,
+        emoji: true,
+      },
       value: `${i}:15`,
     })
     options.push({
-      label: `${i}:30`,
+      text: {
+        type: 'plain_text',
+        text: `${i}:30`,
+        emoji: true,
+      },
       value: `${i}:30`,
     })
     options.push({
-      label: `${i}:45`,
+      text: {
+        type: 'plain_text',
+        text: `${i}:45`,
+        emoji: true,
+      },
       value: `${i}:45`,
     })
   }
@@ -25,26 +41,59 @@ function generateHours() {
 module.exports = function(type) {
   if (type === 'start') {
     return {
-      label: 'Start time',
-      name: 'startTime',
-      type: 'select',
-      options: generateHours(),
+      type: 'input',
+      element: {
+        type: 'static_select',
+        placeholder: {
+          type: 'plain_text',
+          text: 'Start Time',
+          emoji: true,
+        },
+        options: generateHours(),
+      },
+      label: {
+        type: 'plain_text',
+        text: 'Start Time',
+        emoji: true,
+      },
     }
   }
 
   if (type === 'end') {
     return {
-      label: 'End time',
-      name: 'endTime',
-      type: 'select',
-      options: generateHours(),
+      type: 'input',
+      element: {
+        type: 'static_select',
+        placeholder: {
+          type: 'plain_text',
+          text: 'End Time',
+          emoji: true,
+        },
+        options: generateHours(),
+      },
+      label: {
+        type: 'plain_text',
+        text: 'End Time',
+        emoji: true,
+      },
     }
   }
 
   return {
-    label: 'time',
-    name: 'time',
-    type: 'select',
-    options: generateHours(),
+    type: 'input',
+    element: {
+      type: 'static_select',
+      placeholder: {
+        type: 'plain_text',
+        text: 'Time',
+        emoji: true,
+      },
+      options: generateHours(),
+    },
+    label: {
+      type: 'plain_text',
+      text: 'Time',
+      emoji: true,
+    },
   }
 }
