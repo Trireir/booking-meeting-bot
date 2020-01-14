@@ -5,9 +5,11 @@
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js",
-    "deploy:ngrok": "ngrok http 3000"
+    "deploy:ngrok": "ngrok http 3000",
+    "deploy:lt": "lt --port 3000"
   },
   "dependencies": {
+    "axios": "^0.19.1",
     "botbuilder-adapter-slack": "^1.0.7",
     "botkit": "^4.6.0",
     "dotenv": "^7.0.0"

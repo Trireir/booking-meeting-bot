@@ -12,7 +12,7 @@ const {
   SLACK_URI,
   SLACK_APP_SIGNIN_SECRET,
   SLACK_BOT_USER_OAUTH,
-} = require('../env')
+} = require('../../env')
 
 const adapter = new SlackAdapter({
   // REMOVE THIS OPTION AFTER YOU HAVE CONFIGURED YOUR APP!
