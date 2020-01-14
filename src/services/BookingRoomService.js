@@ -3,7 +3,7 @@ const { isRoomAvailable } = require('../utils/utils')
 const { SERVER_PROFILE_ID, ROOMS } = require('../utils/config')
 
 const buildGetBookingRequests = rooms => {
-  var startDate = new Date()
+  const startDate = new Date()
   startDate.setHours(0, 0, 0, 0)
 
   const params = {
