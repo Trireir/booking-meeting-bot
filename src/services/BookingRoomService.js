@@ -1,13 +1,17 @@
 const BookingRoomAxios = require('./BookingRoomAxios')
+const { isRoomAvailable } = require('../utils/utils')
 const { SERVER_PROFILE_ID, ROOMS } = require('../utils/config')
 
-const buildGetBookingRequests = () => {
+const buildGetBookingRequests = rooms => {
+  var startDate = new Date()
+  startDate.setHours(0, 0, 0, 0)
+
   const params = {
-    utcStart: new Date().toISOString(),
+    utcStart: startDate.toISOString(),
     profileId: SERVER_PROFILE_ID,
     pollingInterval: 122000,
   }
-  return ROOMS.slice(0, 4).map(el =>
+  return rooms.map(el =>
     BookingRoomAxios.post('/Display/GetBookings', { ...params, roomId: el.id })
   )
 }
@@ -17,19 +21,15 @@ const BookingRoomService = {
     return ROOMS
   },
 
-  async getBookings() {
-    const data = await Promise.all(buildGetBookingRequests())
+  async getRoomsAvailability() {
+    const rooms = this.getRooms()
+    const data = await Promise.all(buildGetBookingRequests(this.getRooms()))
 
-    return data.map((el, index) => {
-      return {
-        bookingId: el.Data1.BookingId,
-        roomName: ROOMS[index].name,
-        eventName: el.Data1.EventName,
-        user: el.Data1.GroupName,
-        type: el.Data1.EventType,
-        checkedIn: el.Data1.CheckedIn,
-      }
-    })
+    return data.map((el, index) => ({
+      roomName: rooms[index].name,
+      floor: rooms[index].floor,
+      ...isRoomAvailable(el.Data1),
+    }))
   },
 }
 

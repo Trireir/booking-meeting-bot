@@ -1,33 +1,33 @@
 const SERVER_PROFILE_ID = '158'
+const BOOKING_STATES = {
+  PAST: 'PAST',
+  NOW: 'NOW',
+  FUTURE: 'FUTURE',
+}
 const ROOMS = [
-  {
-    id: 118424,
-    name: 'Quake',
-    floor: '1st Floor',
-  },
   {
     id: 118426,
     name: 'LOL',
     floor: '1st Floor',
   },
   {
-    id: 118427,
-    name: 'Space Invaders',
-    floor: '4th Floor',
+    id: 118433,
+    name: 'PUBG',
+    floor: '1st Floor',
   },
   {
-    id: 118428,
-    name: 'Tetris',
-    floor: '4th Floor',
+    id: 118424,
+    name: 'Quake',
+    floor: '1st Floor',
+  },
+  {
+    id: 118434,
+    name: 'WOW',
+    floor: '1st Floor',
   },
   {
     id: 118429,
-    name: 'Marion Bros',
-    floor: '4th Floor',
-  },
-  {
-    id: 118430,
-    name: 'Sonic',
+    name: 'Mario Bros',
     floor: '4th Floor',
   },
   {
@@ -41,18 +41,24 @@ const ROOMS = [
     floor: '4th Floor',
   },
   {
-    id: 118433,
-    name: 'PUBG',
-    floor: '1st Floor',
+    id: 118427,
+    name: 'Space Invaders',
+    floor: '4th Floor',
   },
   {
-    id: 118434,
-    name: 'WOW',
-    floor: '1st Floor',
+    id: 118430,
+    name: 'Sonic',
+    floor: '4th Floor',
+  },
+  {
+    id: 118428,
+    name: 'Tetris',
+    floor: '4th Floor',
   },
 ]
 
 module.exports = {
   SERVER_PROFILE_ID,
+  BOOKING_STATES,
   ROOMS,
 }

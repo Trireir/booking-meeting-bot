@@ -1,22 +1,19 @@
-const {
-  getRoomsAvailability,
-  getRooms,
-} = require('../../business/BookingRoomBusiness')
+const { getRoomsAvailability } = require('../../business/BookingRoomBusiness')
 const RoomInfoView = require('../components/RoomInfoView')
 
 const listRooms = async (bot, message) => {
-  // await getRoomsAvailability()
+  const rooms = await getRoomsAvailability()
   const blocks = []
 
-  blocks.push({
-    type: 'section',
-    text: {
-      type: 'mrkdwn',
-      text: 'Hello! These are the meeting rooms in your workspace',
-    },
-  })
-  getRooms().forEach(el => {
-    blocks.push(RoomInfoView({ roomName: el.name, floor: el.floor }))
+  rooms.forEach(el => {
+    blocks.push(
+      RoomInfoView({
+        roomName: el.roomName,
+        floor: el.floor,
+        isAvailable: el.isAvailable,
+        time: el.time,
+      })
+    )
   })
 
   const content = {

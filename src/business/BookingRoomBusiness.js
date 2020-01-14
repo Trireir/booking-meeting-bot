@@ -5,8 +5,7 @@ const getRooms = () => {
 }
 
 const getRoomsAvailability = async () => {
-  const data = await BookingRoomService.getBookings()
-  console.log(data)
+  return await BookingRoomService.getRoomsAvailability()
 }
 
 module.exports = { getRoomsAvailability, getRooms }
