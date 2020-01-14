@@ -1,11 +1,12 @@
 const { BOOKING_STATES } = require('./config')
+const { getTimeFromUTCStringFormatDate } = require('./date')
 
-const isRoomAvailable = (bookings = []) => {
-  const roomStates = bookings.map(booking => {
-    return getRoomState(booking)
+const isRoomAvailable = (room, when = new Date().getTime()) => {
+  const roomBookingsStates = room.Data1.map(booking => {
+    return getBookingState(booking, when)
   })
 
-  const currentState = roomStates.find(
+  const currentState = roomBookingsStates.find(
     el => el.state === BOOKING_STATES.NOW || el.state === BOOKING_STATES.FUTURE
   )
 
@@ -16,29 +17,34 @@ const isRoomAvailable = (bookings = []) => {
   }
 }
 
-const getRoomState = booking => {
+/**
+ * Gets the booking state
+ * Returns the state of the booking
+ * @param booking
+ * @param when Time in millisecond when you want to check the state. Default is now.
+ * @returns {Object}
+ */
+const getBookingState = (booking, when = new Date().getTime()) => {
   // Time difference between UTC and local time
-  const timeZoneOffset = new Date().getTimezoneOffset() * 60 * 1000
-  const msReservedStart =
-    new Date(booking.UTCReservedStartDateTime).getTime() - timeZoneOffset
-  const msEventStart =
-    new Date(booking.UTCEventStartDateTime).getTime() - timeZoneOffset
-  const msEventEnd =
-    new Date(booking.UTCEventEndDateTime).getTime() - timeZoneOffset
+  const msReservedStart = getTimeFromUTCStringFormatDate(
+    booking.UTCReservedStartDateTime
+  )
+  const msEventStart = getTimeFromUTCStringFormatDate(
+    booking.UTCEventStartDateTime
+  )
+  const msEventEnd = getTimeFromUTCStringFormatDate(booking.UTCEventEndDateTime)
 
-  const now = new Date().getTime()
-
-  if (msEventStart < now && now < msEventEnd) {
+  if (msEventStart < when && when < msEventEnd) {
     return { state: BOOKING_STATES.NOW, time: msEventEnd }
   }
 
   // Past meetings
-  if (now > msEventEnd) {
+  if (when > msEventEnd) {
     return { state: BOOKING_STATES.PAST }
   }
 
   // Future meetings
-  if (now < msReservedStart) {
+  if (when < msReservedStart) {
     return { state: BOOKING_STATES.FUTURE, time: msReservedStart }
   }
 }

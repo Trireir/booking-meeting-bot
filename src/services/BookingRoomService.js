@@ -28,7 +28,7 @@ const BookingRoomService = {
     return data.map((el, index) => ({
       roomName: rooms[index].name,
       floor: rooms[index].floor,
-      ...isRoomAvailable(el.Data1),
+      ...isRoomAvailable(el),
     }))
   },
 }
