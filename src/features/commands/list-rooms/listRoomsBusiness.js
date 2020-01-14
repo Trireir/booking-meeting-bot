@@ -1,5 +1,7 @@
-const { getRoomsAvailability } = require('../../business/BookingRoomBusiness')
-const RoomInfoView = require('../components/RoomInfoView')
+const {
+  getRoomsAvailability,
+} = require('../../../business/BookingRoomBusiness')
+const RoomInfoView = require('../../components/RoomInfoView')
 
 const listRooms = async (bot, message) => {
   const rooms = await getRoomsAvailability()

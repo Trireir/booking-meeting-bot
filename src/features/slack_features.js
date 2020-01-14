@@ -1,4 +1,4 @@
-const listRooms = require('./commands/listRooms.js')
+const listRooms = require('./commands/list-rooms/listRoomsBusiness')
 
 module.exports = function(controller) {
   controller.on('slash_command', async (bot, message) => {
