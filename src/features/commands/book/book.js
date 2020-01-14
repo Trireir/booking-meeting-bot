@@ -1,4 +1,8 @@
-const { RoomField, HourField, DateField } = require('./fields/index')
+const {
+  RoomField,
+  HourField,
+  DateField,
+} = require('../../components/fields/index')
 const { ROOMS } = require('../../../utils/config')
 module.exports = async function(bot, message) {
   const trigger_id = message.trigger_id
