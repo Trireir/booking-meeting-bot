@@ -23,7 +23,7 @@ const BookingRoomService = {
 
   async getRoomsAvailability() {
     const rooms = this.getRooms()
-    const data = await Promise.all(buildGetBookingRequests(this.getRooms()))
+    const data = await Promise.all(buildGetBookingRequests(rooms))
 
     return data.map((el, index) => ({
       roomName: rooms[index].name,
