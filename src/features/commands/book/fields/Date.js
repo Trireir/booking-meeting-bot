@@ -2,8 +2,10 @@
 module.exports = function() {
   return {
     type: 'input',
+    block_id: 'date',
     element: {
       type: 'datepicker',
+      action_id: 'dateValue',
       placeholder: {
         type: 'plain_text',
         text: 'Select a date',

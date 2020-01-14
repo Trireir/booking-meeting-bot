@@ -2,10 +2,17 @@ const { RoomField, HourField, DateField } = require('./fields/index')
 
 module.exports = async function(bot, message) {
   const trigger_id = message.trigger_id
+  const messageStr = JSON.stringify({
+    channel_id: message.channel_id,
+    response_url: message.response_url,
+    incoming_message: message.incoming_message,
+  })
   const response = await bot.api.views.open({
     trigger_id: trigger_id,
     view: {
       type: 'modal',
+      callback_id: 'book-modal',
+      private_metadata: `${messageStr}`,
       title: {
         type: 'plain_text',
         text: 'Book a room',
@@ -24,8 +31,10 @@ module.exports = async function(bot, message) {
       blocks: [
         {
           type: 'input',
+          block_id: 'title',
           element: {
             type: 'plain_text_input',
+            action_id: 'titleValue',
             placeholder: {
               type: 'plain_text',
               text: 'Title',

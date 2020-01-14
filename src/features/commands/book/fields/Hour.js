@@ -7,7 +7,7 @@ function generateHours() {
         text: `${i}:00`,
         emoji: true,
       },
-      value: '`${i}:00`',
+      value: `${i}:00`,
     })
     options.push({
       text: {
@@ -42,8 +42,10 @@ module.exports = function(type) {
   if (type === 'start') {
     return {
       type: 'input',
+      block_id: 'startTime',
       element: {
         type: 'static_select',
+        action_id: 'startTimeValue',
         placeholder: {
           type: 'plain_text',
           text: 'Start Time',
@@ -62,8 +64,10 @@ module.exports = function(type) {
   if (type === 'end') {
     return {
       type: 'input',
+      block_id: 'endTime',
       element: {
         type: 'static_select',
+        action_id: 'endTimeValue',
         placeholder: {
           type: 'plain_text',
           text: 'End Time',
@@ -81,8 +85,10 @@ module.exports = function(type) {
 
   return {
     type: 'input',
+    block_id: 'time',
     element: {
       type: 'static_select',
+      action_id: 'timeValue',
       placeholder: {
         type: 'plain_text',
         text: 'Time',

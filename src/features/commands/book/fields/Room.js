@@ -13,8 +13,10 @@ function parseRooms(rooms) {
 module.exports = function(rooms) {
   return {
     type: 'input',
+    block_id: 'room',
     element: {
       type: 'static_select',
+      action_id: 'roomValue',
       placeholder: {
         type: 'plain_text',
         text: 'Select room',
