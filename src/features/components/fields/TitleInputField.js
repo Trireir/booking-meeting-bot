@@ -1,20 +1,19 @@
-//rooms = [{id, name}, ...]
 module.exports = function() {
   return {
     type: 'input',
-    block_id: 'date',
+    block_id: 'title',
     element: {
-      type: 'datepicker',
-      action_id: 'dateValue',
+      type: 'plain_text_input',
+      action_id: 'titleValue',
       placeholder: {
         type: 'plain_text',
-        text: 'Select a date',
+        text: 'Title',
         emoji: true,
       },
     },
     label: {
       type: 'plain_text',
-      text: 'Date',
+      text: 'Metting name',
       emoji: true,
     },
   }

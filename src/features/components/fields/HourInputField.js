@@ -1,104 +1,65 @@
 function generateHours() {
   const options = []
+  let date = new Date()
   for (let i = 8; i <= 19; i++) {
+    date.setHours(i, 0, 0)
     options.push({
       text: {
         type: 'plain_text',
         text: `${i}:00`,
         emoji: true,
       },
-      value: `${i}:00`,
+      value: `${date.getTime()}`,
     })
+    date.setHours(i, 15, 0)
     options.push({
       text: {
         type: 'plain_text',
         text: `${i}:15`,
         emoji: true,
       },
-      value: `${i}:15`,
+      value: `${date.getTime()}`,
     })
+    date.setHours(i, 30, 0)
     options.push({
       text: {
         type: 'plain_text',
         text: `${i}:30`,
         emoji: true,
       },
-      value: `${i}:30`,
+      value: `${date.getTime()}`,
     })
+    date.setHours(i, 45, 0)
     options.push({
       text: {
         type: 'plain_text',
         text: `${i}:45`,
         emoji: true,
       },
-      value: `${i}:45`,
+      value: `${date.getTime()}`,
     })
   }
   return options
 }
 
-//type = start / end / hour
-module.exports = function(type) {
-  if (type === 'start') {
-    return {
-      type: 'input',
-      block_id: 'startTime',
-      element: {
-        type: 'static_select',
-        action_id: 'startTimeValue',
-        placeholder: {
-          type: 'plain_text',
-          text: 'Start Time',
-          emoji: true,
-        },
-        options: generateHours(),
-      },
-      label: {
-        type: 'plain_text',
-        text: 'Start Time',
-        emoji: true,
-      },
-    }
-  }
-
-  if (type === 'end') {
-    return {
-      type: 'input',
-      block_id: 'endTime',
-      element: {
-        type: 'static_select',
-        action_id: 'endTimeValue',
-        placeholder: {
-          type: 'plain_text',
-          text: 'End Time',
-          emoji: true,
-        },
-        options: generateHours(),
-      },
-      label: {
-        type: 'plain_text',
-        text: 'End Time',
-        emoji: true,
-      },
-    }
-  }
-
+//type = start / end / other
+module.exports = function(type, label) {
   return {
     type: 'input',
-    block_id: 'time',
+    block_id: `${type}Time`,
     element: {
       type: 'static_select',
-      action_id: 'timeValue',
+      action_id: `${type}TimeValue`,
       placeholder: {
         type: 'plain_text',
-        text: 'Time',
+        text: `${label} Time`,
         emoji: true,
       },
       options: generateHours(),
     },
     label: {
       type: 'plain_text',
-      text: 'Time',
+      text: `${label} Time`,
       emoji: true,
     },
   }
