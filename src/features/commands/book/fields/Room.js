@@ -2,10 +2,10 @@ function parseRooms(rooms) {
   return rooms.map(room => ({
     text: {
       type: 'plain_text',
-      text: room.name,
+      text: `${room.name} (${room.floor})`,
       emoji: true,
     },
-    value: room.id,
+    value: room.id.toString(),
   }))
 }
 

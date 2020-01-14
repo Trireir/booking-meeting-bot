@@ -19,7 +19,7 @@ module.exports = function(controller) {
     let messageReply = JSON.parse(view.private_metadata)
     await bot.replyPrivate(
       messageReply,
-      `Reserving Room ${view.state.values.room.roomValue.selected_option.value} in date ${view.state.values.date.dateValue.selected_date} between hours ${view.state.values.startTime.startTimeValue.selected_option.value} to ${view.state.values.endTime.endTimeValue.selected_option.value} with title ${view.state.values.title.titleValue.value} and user ${user.name}`
+      `Reserving Room ${view.state.values.room.roomValue.selected_option.text.text} in date ${view.state.values.date.dateValue.selected_date} between hours ${view.state.values.startTime.startTimeValue.selected_option.value} to ${view.state.values.endTime.endTimeValue.selected_option.value} with title ${view.state.values.title.titleValue.value} and user ${user.name}`
     )
   })
 }

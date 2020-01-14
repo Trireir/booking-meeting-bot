@@ -1,5 +1,5 @@
 const { RoomField, HourField, DateField } = require('./fields/index')
-
+const { ROOMS } = require('../../../utils/config')
 module.exports = async function(bot, message) {
   const trigger_id = message.trigger_id
   const messageStr = JSON.stringify({
@@ -47,11 +47,7 @@ module.exports = async function(bot, message) {
             emoji: true,
           },
         },
-        RoomField([
-          { name: 'Tetris', id: '1' },
-          { name: 'Space Invaders', id: '2' },
-          { name: 'Mario Bros', id: '3' },
-        ]),
+        RoomField(ROOMS),
         DateField(),
         HourField('start'),
         HourField('end'),
