@@ -22,8 +22,8 @@ module.exports = async function(bot, message) {
         TitleField(),
         RoomField(ROOMS),
         DateField(),
-        HourField('start', 'Start'),
-        HourField('end', 'Start'),
+        HourField('start', 'Start Time'),
+        HourField('end', 'End Time'),
       ],
       messageStr
     )
