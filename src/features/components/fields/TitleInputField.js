@@ -1,3 +1,8 @@
+const {
+  FIELD_TITLE_SELECT_TITLE,
+  FIELD_TITLE_TITLE,
+} = require('../../../utils/texts')
+
 module.exports = function() {
   return {
     type: 'input',
@@ -7,13 +12,13 @@ module.exports = function() {
       action_id: 'titleValue',
       placeholder: {
         type: 'plain_text',
-        text: 'Title',
+        text: FIELD_TITLE_TITLE,
         emoji: true,
       },
     },
     label: {
       type: 'plain_text',
-      text: 'Metting name',
+      text: FIELD_TITLE_SELECT_TITLE,
       emoji: true,
     },
   }

@@ -1,3 +1,5 @@
+const { MODAL_SUBMIT, MODAL_CANCEL, MODAL_TITLE } = require('../../utils/texts')
+
 module.exports = function(trigger_id, elements, messageStr) {
   return {
     trigger_id: trigger_id,
@@ -7,17 +9,17 @@ module.exports = function(trigger_id, elements, messageStr) {
       private_metadata: `${messageStr}`,
       title: {
         type: 'plain_text',
-        text: 'Book a room',
+        text: MODAL_TITLE,
         emoji: true,
       },
       submit: {
         type: 'plain_text',
-        text: 'Book',
+        text: MODAL_SUBMIT,
         emoji: true,
       },
       close: {
         type: 'plain_text',
-        text: 'Cancel',
+        text: MODAL_CANCEL,
         emoji: true,
       },
       blocks: elements,

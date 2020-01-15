@@ -7,6 +7,7 @@ const {
 const Modal = require('../../components/Modal')
 
 const { ROOMS } = require('../../../utils/config')
+const { FIELD_START_TIME, FIELD_END_TIME } = require('../../../utils/texts')
 
 module.exports = async function(bot, message) {
   const trigger_id = message.trigger_id
@@ -22,8 +23,8 @@ module.exports = async function(bot, message) {
         TitleField(),
         RoomField(ROOMS),
         DateField(),
-        HourField('start', 'Start Time'),
-        HourField('end', 'End Time'),
+        HourField('start', FIELD_START_TIME),
+        HourField('end', FIELD_END_TIME),
       ],
       messageStr
     )

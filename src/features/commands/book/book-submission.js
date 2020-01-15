@@ -1,17 +1,22 @@
+const {
+  ERRORS_DATE_PAST,
+  ERRORS_HOUR_END_BEFORE_START,
+} = require('../../../utils/texts')
+
 function validate(values) {
   const errors = {}
   const now = new Date()
   now.setHours(0, 0, 0, 0)
 
   if (new Date(values.date.dateValue.selected_date).getTime() < now.getTime()) {
-    errors.date = 'Date must be in the future'
+    errors.date = ERRORS_DATE_PAST
   }
 
   if (
     parseInt(values.startTime.startTimeValue.selected_option.value) >
     parseInt(values.endTime.endTimeValue.selected_option.value)
   ) {
-    errors.endTime = 'End Time must be after start'
+    errors.endTime = ERRORS_HOUR_END_BEFORE_START
   }
 
   return errors

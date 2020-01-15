@@ -1,3 +1,8 @@
+const {
+  FIELD_ROOM_SELECT_ROOM,
+  FIELD_ROOM_ROOM,
+} = require('../../../utils/texts')
+
 function parseRooms(rooms) {
   return rooms.map(room => ({
     text: {
@@ -19,14 +24,14 @@ module.exports = function(rooms) {
       action_id: 'roomValue',
       placeholder: {
         type: 'plain_text',
-        text: 'Select room',
+        text: FIELD_ROOM_SELECT_ROOM,
         emoji: true,
       },
       options: parseRooms(rooms),
     },
     label: {
       type: 'plain_text',
-      text: 'Room',
+      text: FIELD_ROOM_ROOM,
       emoji: true,
     },
   }
