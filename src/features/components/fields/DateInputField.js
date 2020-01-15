@@ -3,7 +3,6 @@ const {
   FIELD_DATE_SELECT_DATE,
 } = require('../../../utils/texts')
 
-//rooms = [{id, name}, ...]
 module.exports = function() {
   return {
     type: 'input',
