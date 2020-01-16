@@ -7,21 +7,14 @@ const listRooms = async (bot, message) => {
   const rooms = await getRoomsAvailability()
   const blocks = []
 
-  rooms.forEach(el => {
-    blocks.push(
-      RoomInfoView({
-        roomName: el.roomName,
-        floor: el.floor,
-        isAvailable: el.isAvailable,
-        time: el.time,
-      })
-    )
+  rooms.forEach(room => {
+    blocks.push(RoomInfoView({ ...room }))
   })
 
   const content = {
     blocks,
   }
-  await bot.reply(message, content)
+  await bot.replyPrivate(message, content)
 }
 
 module.exports = listRooms

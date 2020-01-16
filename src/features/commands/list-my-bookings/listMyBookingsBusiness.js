@@ -1,6 +1,7 @@
 const { getMyBookings } = require('../../../business/BookingRoomBusiness')
 const MyBookingsView = require('../../components/MyBookingsView')
 const MessageView = require('../../components/MessageView')
+const { MY_BOOKINGS_EMPTY_TEXT } = require('../../../utils/texts')
 
 const listMyBookings = async (bot, message) => {
   const userId = message.incoming_message.channelData.user_name
@@ -15,7 +16,7 @@ const listMyBookings = async (bot, message) => {
   const content = {
     blocks: blocks.length
       ? blocks
-      : [MessageView({ text: 'You dont have any meeting for today' })],
+      : [MessageView({ text: MY_BOOKINGS_EMPTY_TEXT })],
   }
 
   await bot.replyPrivate(message, content)
