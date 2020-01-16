@@ -22,7 +22,7 @@ const ROOMS = [
   },
   {
     id: 118434,
-    name: 'WOW',
+    name: 'WoW',
     floor: '1st Floor',
   },
   {

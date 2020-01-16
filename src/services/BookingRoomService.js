@@ -21,14 +21,14 @@ const BookingRoomService = {
     return ROOMS
   },
 
-  async getRoomsAvailability() {
+  async getRoomsAvailability({ when }) {
     const rooms = this.getRooms()
     const data = await Promise.all(buildGetBookingRequests(rooms))
 
     return data.map((el, index) => ({
       roomName: rooms[index].name,
       floor: rooms[index].floor,
-      ...isRoomAvailable(el),
+      ...isRoomAvailable(el, when),
     }))
   },
 
@@ -43,12 +43,12 @@ const BookingRoomService = {
     return data.Data1[0].GroupID
   },
 
-  async getMyBookings({ authId }) {
+  async getMyBookings({ authId, time }) {
     const groupId = await this.getAuthGroup({ authId })
     const rooms = this.getRooms()
     const data = await Promise.all(buildGetBookingRequests(rooms))
 
-    return getMyBookings(data, groupId, rooms)
+    return getMyBookings(data, groupId, rooms, time)
   },
 }
 

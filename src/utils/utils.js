@@ -1,7 +1,7 @@
 const { BOOKING_STATES } = require('./config')
 const { getTimeFromUTCStringFormatDate } = require('./date')
 
-const isRoomAvailable = (room, when = new Date().getTime()) => {
+const isRoomAvailable = (room, when = Date.now()) => {
   const roomBookingsStates = room.Data1.map(booking => {
     return getBookingState(booking, when)
   })
@@ -19,7 +19,7 @@ const isRoomAvailable = (room, when = new Date().getTime()) => {
 
 const getMyBookings = (roomList, groupId, rooms) => {
   const myBookings = []
-  const now = new Date().getTime()
+  const now = Date.now()
 
   const room_bookings = roomList.map(room => {
     return room.Data1.filter(booking => booking.GroupID === groupId)

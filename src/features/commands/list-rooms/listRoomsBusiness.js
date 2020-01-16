@@ -4,7 +4,7 @@ const {
 const RoomInfoView = require('../../components/RoomInfoView')
 
 const listRooms = async (bot, message) => {
-  const rooms = await getRoomsAvailability()
+  const rooms = await getRoomsAvailability({})
   const blocks = []
 
   rooms.forEach(room => {
