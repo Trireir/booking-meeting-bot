@@ -17,6 +17,32 @@ const isRoomAvailable = (room, when = new Date().getTime()) => {
   }
 }
 
+const getMyBookings = (roomList, groupId, rooms) => {
+  const myBookings = []
+
+  const room_bookings = roomList.map(room => {
+    return room.Data1.filter(booking => booking.GroupID === groupId)
+  })
+
+  room_bookings.forEach((bookings, index) => {
+    if (bookings.length) {
+      bookings.forEach(booking => {
+        myBookings.push({
+          roomName: rooms[index].name,
+          floor: rooms[index].floor,
+          startTime: getTimeFromUTCStringFormatDate(
+            booking.UTCReservedStartDateTime
+          ),
+          endTime: getTimeFromUTCStringFormatDate(
+            booking.UTCReservedEndDateTime
+          ),
+        })
+      })
+    }
+  })
+  return myBookings
+}
+
 /**
  * Gets the booking state
  * Returns the state of the booking
@@ -51,4 +77,5 @@ const getBookingState = (booking, when = new Date().getTime()) => {
 
 module.exports = {
   isRoomAvailable,
+  getMyBookings,
 }

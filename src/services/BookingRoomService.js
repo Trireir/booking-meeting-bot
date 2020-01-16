@@ -1,5 +1,5 @@
 const BookingRoomAxios = require('./BookingRoomAxios')
-const { isRoomAvailable } = require('../utils/utils')
+const { isRoomAvailable, getMyBookings } = require('../utils/utils')
 const { SERVER_PROFILE_ID, ROOMS } = require('../utils/config')
 
 const buildGetBookingRequests = rooms => {
@@ -30,6 +30,25 @@ const BookingRoomService = {
       floor: rooms[index].floor,
       ...isRoomAvailable(el),
     }))
+  },
+
+  async getAuthGroup({ authId }) {
+    const data = await BookingRoomAxios.post('/Display/AuthenticateGroup', {
+      roomId: this.getRooms()[0].id,
+      profileId: SERVER_PROFILE_ID,
+      authId,
+      isSecondaryAuth: false,
+    })
+
+    return data.Data1[0].GroupID
+  },
+
+  async getMyBookings({ authId }) {
+    const groupId = await this.getAuthGroup({ authId })
+    const rooms = this.getRooms()
+    const data = await Promise.all(buildGetBookingRequests(rooms))
+
+    return getMyBookings(data, groupId, rooms)
   },
 }
 

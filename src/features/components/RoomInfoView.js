@@ -1,8 +1,7 @@
+const { toHourAndMinStringFormat } = require('../../utils/date')
+
 module.exports = function({ roomName, floor, isAvailable, time }) {
-  const timeFormatted = new Date(time).toLocaleString(undefined, {
-    hour: 'numeric',
-    minute: 'numeric',
-  })
+  const timeFormatted = toHourAndMinStringFormat(time)
 
   const textToDisplay = `*${roomName}* (${floor}) ${
     time ? `until ${timeFormatted}` : ''

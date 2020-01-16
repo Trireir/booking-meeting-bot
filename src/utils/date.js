@@ -6,6 +6,14 @@ const getTimeFromUTCStringFormatDate = UTCStringDate => {
   return date.getTime() - timeZoneOffset
 }
 
+const toHourAndMinStringFormat = time => {
+  return new Date(time).toLocaleString(undefined, {
+    hour: 'numeric',
+    minute: 'numeric',
+  })
+}
+
 module.exports = {
   getTimeFromUTCStringFormatDate,
+  toHourAndMinStringFormat,
 }
