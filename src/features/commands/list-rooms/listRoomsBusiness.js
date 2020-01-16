@@ -2,9 +2,11 @@ const {
   getRoomsAvailability,
 } = require('../../../business/BookingRoomBusiness')
 const RoomInfoView = require('../../components/RoomInfoView')
+const { validateHours } = require('../../../utils/validations')
 
 const listRooms = async (bot, message) => {
-  const rooms = await getRoomsAvailability({})
+  const [hours, minutes] = validateHours(message.incoming_message.text)
+  const rooms = await getRoomsAvailability({ hours, minutes })
   const blocks = []
 
   rooms.forEach(room => {

@@ -1,12 +1,12 @@
 const BookingRoomService = require('../services/BookingRoomService')
-const { parseHoursAndMinString } = require('../utils/date')
+const { getDateFromValues } = require('../utils/date')
 
 const getRooms = () => {
   return BookingRoomService.getRooms()
 }
 
-const getRoomsAvailability = async ({ timeString }) => {
-  const time = parseHoursAndMinString(timeString)
+const getRoomsAvailability = async ({ hours, minutes }) => {
+  const time = getDateFromValues({ hours, minutes }).getTime()
   return await BookingRoomService.getRoomsAvailability({ when: time })
 }
 

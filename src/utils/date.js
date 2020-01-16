@@ -13,18 +13,15 @@ const toHourAndMinStringFormat = time => {
   })
 }
 
-const parseHoursAndMinString = timeString => {
+const getDateFromValues = ({ hours, minutes }) => {
   const date = new Date()
-  if (timeString) {
-    const [hours, minutes] = timeString.split(':')
-    date.setHours(parseInt(hours))
-    date.setMinutes(parseInt(minutes))
-  }
-  return date.getTime()
+  if (hours !== undefined) date.setHours(hours)
+  if (minutes !== undefined) date.setMinutes(minutes)
+  return date
 }
 
 module.exports = {
   getTimeFromUTCStringFormatDate,
   toHourAndMinStringFormat,
-  parseHoursAndMinString,
+  getDateFromValues,
 }
