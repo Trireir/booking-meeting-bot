@@ -1,5 +1,5 @@
 const { getMyBookings } = require('../../../business/BookingRoomBusiness')
-const BookingView = require('../../components/BookingView')
+const MyBookingsView = require('../../components/MyBookingsView')
 const MessageView = require('../../components/MessageView')
 
 const listMyBookings = async (bot, message) => {
@@ -9,7 +9,7 @@ const listMyBookings = async (bot, message) => {
   const bookings = await getMyBookings({ userId })
 
   bookings.map(booking => {
-    blocks.push(BookingView({ ...booking }))
+    blocks.push(MyBookingsView({ ...booking }))
   })
 
   const content = {

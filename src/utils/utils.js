@@ -19,6 +19,7 @@ const isRoomAvailable = (room, when = new Date().getTime()) => {
 
 const getMyBookings = (roomList, groupId, rooms) => {
   const myBookings = []
+  const now = new Date().getTime()
 
   const room_bookings = roomList.map(room => {
     return room.Data1.filter(booking => booking.GroupID === groupId)
@@ -27,16 +28,20 @@ const getMyBookings = (roomList, groupId, rooms) => {
   room_bookings.forEach((bookings, index) => {
     if (bookings.length) {
       bookings.forEach(booking => {
-        myBookings.push({
-          roomName: rooms[index].name,
-          floor: rooms[index].floor,
-          startTime: getTimeFromUTCStringFormatDate(
-            booking.UTCReservedStartDateTime
-          ),
-          endTime: getTimeFromUTCStringFormatDate(
-            booking.UTCReservedEndDateTime
-          ),
-        })
+        const endTime = getTimeFromUTCStringFormatDate(
+          booking.UTCReservedEndDateTime
+        )
+        if (endTime > now) {
+          myBookings.push({
+            roomName: rooms[index].name,
+            floor: rooms[index].floor,
+            eventName: booking.EventName,
+            startTime: getTimeFromUTCStringFormatDate(
+              booking.UTCReservedStartDateTime
+            ),
+            endTime,
+          })
+        }
       })
     }
   })
