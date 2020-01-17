@@ -17,6 +17,7 @@ module.exports = {
 
   ERRORS_DATE_PAST: 'Date must be in the future',
   ERRORS_HOUR_END_BEFORE_START: 'End Time must be after start',
+  ERRORS_HOUR_END_BEFORE_NOW: 'End Time must be after now',
 
   BOOK_NEAR_END_TEXT:
     "Your room book will end soon, if you wish extend the time try to use '/extend [min]', if you dont specify mins it will extend 15 min",

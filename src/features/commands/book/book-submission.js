@@ -2,6 +2,7 @@ const {
   ERRORS_DATE_PAST,
   ERRORS_HOUR_END_BEFORE_START,
   BOOK_NEAR_END_TEXT,
+  ERRORS_HOUR_END_BEFORE_NOW,
 } = require('../../../utils/texts')
 
 const { SLACK_BOT_USER_OAUTH } = require('../../../../env')
@@ -22,7 +23,24 @@ function validate(values) {
     errors.endTime = ERRORS_HOUR_END_BEFORE_START
   }
 
+  if (
+    !errors.endTime &&
+    new Date(values.date.dateValue.selected_date).getTime() <=
+      now.getTime() + 86400000 /*60 * 60 * 24 * 1000*/ &&
+    parseInt(values.endTime.endTimeValue.selected_option.value) <
+      new Date().getTime()
+  ) {
+    errors.endTime = ERRORS_HOUR_END_BEFORE_NOW
+  }
+
   return errors
+}
+
+function getHourString(dateString) {
+  const date = new Date(parseInt(dateString))
+  return `${date.getHours()}:${
+    date.getMinutes() < 10 ? '0' : ''
+  }${date.getMinutes()}`
 }
 
 module.exports = async function(bot, message) {
@@ -40,7 +58,17 @@ module.exports = async function(bot, message) {
   } else {
     await bot.replyPrivate(
       messageReply,
-      `Reserved Room ${view.state.values.room.roomValue.selected_option.text.text} in date ${view.state.values.date.dateValue.selected_date} between hours ${view.state.values.startTime.startTimeValue.selected_option.value} to ${view.state.values.endTime.endTimeValue.selected_option.value} with title ${view.state.values.title.titleValue.value} and user ${user.name}`
+      `Reserved Room ${
+        view.state.values.room.roomValue.selected_option.text.text
+      } in date ${
+        view.state.values.date.dateValue.selected_date
+      } between hours ${getHourString(
+        view.state.values.startTime.startTimeValue.selected_option.value
+      )} to ${getHourString(
+        view.state.values.endTime.endTimeValue.selected_option.value
+      )} with title ${view.state.values.title.titleValue.value} and user ${
+        user.name
+      }`
     )
 
     const endHour = new Date(
