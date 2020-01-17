@@ -6,11 +6,9 @@ module.exports = function(controller) {
     try {
       switch (message.command) {
         case '/listrooms':
-          await listRooms(bot, message)
-          break
+          return await listRooms(bot, message)
         case '/list':
-          await listMyBookings(bot, message)
-          break
+          return await listMyBookings(bot, message)
         default:
           break
       }
