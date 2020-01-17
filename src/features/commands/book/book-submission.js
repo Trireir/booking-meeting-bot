@@ -3,9 +3,11 @@ const {
   ERRORS_HOUR_END_BEFORE_START,
   BOOK_NEAR_END_TEXT,
   ERRORS_HOUR_END_BEFORE_NOW,
+  ERRORS_SOMETHING_WRONG,
 } = require('../../../utils/texts')
 
 const { SLACK_BOT_USER_OAUTH } = require('../../../../env')
+const { bookRoom } = require('../../../business/BookingRoomBusiness')
 
 function validate(values) {
   const errors = {}
@@ -56,38 +58,66 @@ module.exports = async function(bot, message) {
       errors: errors,
     })
   } else {
-    await bot.replyPrivate(
-      messageReply,
-      `Reserved Room ${
-        view.state.values.room.roomValue.selected_option.text.text
-      } in date ${
-        view.state.values.date.dateValue.selected_date
-      } between hours ${getHourString(
-        view.state.values.startTime.startTimeValue.selected_option.value
-      )} to ${getHourString(
-        view.state.values.endTime.endTimeValue.selected_option.value
-      )} with title ${view.state.values.title.titleValue.value} and user ${
-        user.name
-      }`
+    const timeStart = new Date(view.state.values.date.dateValue.selected_date)
+
+    const startHour = new Date(
+      parseInt(view.state.values.startTime.startTimeValue.selected_option.value)
     )
+
+    timeStart.setHours(startHour.getHours())
+    timeStart.setMinutes(startHour.getMinutes())
+    timeStart.setSeconds(startHour.getSeconds())
+
+    const timeEnd = new Date(view.state.values.date.dateValue.selected_date)
 
     const endHour = new Date(
       parseInt(view.state.values.endTime.endTimeValue.selected_option.value)
     )
-    const day = new Date(view.state.values.date.dateValue.selected_date)
+    timeEnd.setHours(endHour.getHours())
+    timeEnd.setMinutes(endHour.getMinutes())
+    timeEnd.setSeconds(endHour.getSeconds())
 
-    day.setHours(endHour.getHours())
-    day.setMinutes(endHour.getMinutes())
-    day.setSeconds(endHour.getSeconds())
+    const values = {
+      startHour: timeStart,
+      endHour: timeEnd,
+      roomId: view.state.values.room.roomValue.selected_option.value,
+      eventName: view.state.values.title.titleValue.value,
+    }
 
-    const scheduleReminderDate = Math.round(day.getTime() / 1000) - 3 * 60
+    const response = await bookRoom(values, user)
 
-    if (scheduleReminderDate * 1000 > new Date().getTime()) {
-      await bot.api.chat.scheduleMessage({
-        token: SLACK_BOT_USER_OAUTH,
-        channel: messageReply.incoming_message.channelData.user_id,
-        post_at: scheduleReminderDate,
-        text: BOOK_NEAR_END_TEXT,
+    if (response.MessageCode === 0) {
+      await bot.replyPrivate(
+        messageReply,
+        `Reserved Room ${
+          view.state.values.room.roomValue.selected_option.text.text
+        } in date ${
+          view.state.values.date.dateValue.selected_date
+        } between hours ${getHourString(
+          view.state.values.startTime.startTimeValue.selected_option.value
+        )} to ${getHourString(
+          view.state.values.endTime.endTimeValue.selected_option.value
+        )} with title ${view.state.values.title.titleValue.value} and user ${
+          user.name
+        }`
+      )
+
+      const scheduleReminderDate = Math.round(timeEnd.getTime() / 1000) - 3 * 60
+
+      if (scheduleReminderDate * 1000 > new Date().getTime()) {
+        await bot.api.chat.scheduleMessage({
+          token: SLACK_BOT_USER_OAUTH,
+          channel: messageReply.incoming_message.channelData.user_id,
+          post_at: scheduleReminderDate,
+          text: BOOK_NEAR_END_TEXT,
+        })
+      }
+    } else {
+      bot.httpBody({
+        response_action: 'errors',
+        errors: {
+          title: `${ERRORS_SOMETHING_WRONG} - code {${response.Message}}`,
+        },
       })
     }
   }
