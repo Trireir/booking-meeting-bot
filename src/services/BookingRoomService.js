@@ -65,13 +65,13 @@ const BookingRoomService = {
       utcEnd: endHour,
       groupId: groupId,
       contactId: 0,
-      groupName: authName, //care
+      groupName: authName,
       eventName: eventName,
       attendance: 1,
       connectionName: '',
     })
 
-    return response.Data
+    return response.Data[0]
   },
 }
 

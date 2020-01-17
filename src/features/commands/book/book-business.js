@@ -1,13 +1,50 @@
 const {
-  RoomField,
-  HourField,
-  DateField,
-  TitleField,
+  TextInputField,
+  SelectInputField,
+  DatePickerInputField,
 } = require('../../components/fields/index')
 const Modal = require('../../components/Modal')
-
 const { ROOMS } = require('../../../utils/config')
-const { FIELD_START_TIME, FIELD_END_TIME } = require('../../../utils/texts')
+const {
+  FIELD_START_TIME,
+  FIELD_END_TIME,
+  FIELD_TITLE_SELECT_TITLE,
+  FIELD_TITLE_TITLE,
+  FIELD_ROOM_SELECT_ROOM,
+  FIELD_ROOM_ROOM,
+  FIELD_DATE_DATE,
+  FIELD_DATE_SELECT_DATE,
+} = require('../../../utils/texts')
+
+function parseRooms(rooms) {
+  return rooms.map(room => ({
+    text: {
+      type: 'plain_text',
+      text: `${room.name} (${room.floor})`,
+      emoji: true,
+    },
+    value: room.id.toString(),
+  }))
+}
+
+function generateHours() {
+  const options = []
+  let date = new Date()
+  for (let i = 8; i <= 19; i++) {
+    for (let j = 0; j <= 45; j += 15) {
+      date.setHours(i, j, 0)
+      options.push({
+        text: {
+          type: 'plain_text',
+          text: `${i}:${j < 10 ? '0' : ''}${j}`,
+          emoji: true,
+        },
+        value: `${date.getTime()}`,
+      })
+    }
+  }
+  return options
+}
 
 module.exports = async function(bot, message) {
   const trigger_id = message.trigger_id
@@ -20,11 +57,40 @@ module.exports = async function(bot, message) {
     Modal(
       trigger_id,
       [
-        TitleField(),
-        RoomField(ROOMS),
-        DateField(),
-        HourField('start', FIELD_START_TIME),
-        HourField('end', FIELD_END_TIME),
+        TextInputField(
+          'title',
+          'titleValue',
+          FIELD_TITLE_SELECT_TITLE,
+          FIELD_TITLE_TITLE
+        ),
+        SelectInputField(
+          'room',
+          'roomValue',
+          FIELD_ROOM_SELECT_ROOM,
+          FIELD_ROOM_ROOM,
+          parseRooms(ROOMS)
+        ),
+        DatePickerInputField(
+          'date',
+          'dateValue',
+          FIELD_DATE_SELECT_DATE,
+          FIELD_DATE_DATE,
+          parseRooms(ROOMS)
+        ),
+        SelectInputField(
+          'startTime',
+          'startTimeValue',
+          FIELD_START_TIME,
+          FIELD_START_TIME,
+          generateHours()
+        ),
+        SelectInputField(
+          'endTime',
+          'endTimeValue',
+          FIELD_END_TIME,
+          FIELD_END_TIME,
+          generateHours(ROOMS)
+        ),
       ],
       messageStr
     )
