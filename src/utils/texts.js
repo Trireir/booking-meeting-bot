@@ -1,4 +1,5 @@
 module.exports = {
+  
   FIELD_START_TIME: 'Start Time',
   FIELD_END_TIME: 'End Time',
 
@@ -21,4 +22,6 @@ module.exports = {
 
   BOOK_NEAR_END_TEXT:
     "Your room book will end soon, if you wish extend the time try to use '/extend [min]', if you dont specify mins it will extend 15 min",
+  
+    MY_BOOKINGS_EMPTY_TEXT: 'You dont have any meeting for today',
 }
