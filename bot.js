@@ -1,2 +1,2 @@
 /* eslint-disable no-unused-vars */
-const SlackBotController = require('./controllers/SlackBotController.js')
+const SlackBotController = require('./src/controllers/SlackBotController.js')
