@@ -23,7 +23,8 @@ const getDateFromValues = ({ hours, minutes }) => {
 const isToday = date => {
   const now = new Date()
   now.setHours(0, 0, 0, 0)
-  return new Date(date).getTime() <= now.getTime() + 86400000
+  const inputDate = new Date(date).getTime()
+  return inputDate <= now.getTime() + 86400000 && inputDate > now.getTime()
 }
 
 module.exports = {
