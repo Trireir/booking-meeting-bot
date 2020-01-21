@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nodemon bot.js",
     "deploy:ngrok": "ngrok http 3000",
-    "deploy:lt": "lt --port 3000"
+    "deploy:lt": "lt --port 3000",
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "axios": "^0.19.1",
@@ -15,7 +17,11 @@
     "dotenv": "^7.0.0"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.17.0",
+    "botkit-mock": "^4.0.0",
     "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.6.0",
+    "jest": "^24.9.0",
     "nodemon": "^2.0.2"
   }
 }
