@@ -6,24 +6,21 @@ const listMyBookings = require('./commands/list-my-bookings/listMyBookingsBusine
 module.exports = function(controller) {
   //Slash Command (Have to be declared in Slack)
   controller.on('slash_command', async (bot, message) => {
-
     try {
-    switch (message.command) {
-      case '/book':
-        await book(bot, message)
-        break
+      switch (message.command) {
+        case '/book':
+          await book(bot, message)
+          break
         case '/listrooms':
-          await listRooms(bot, message)
-          break
+          return await listRooms(bot, message)
         case '/list':
-          await listMyBookings(bot, message)
+          return await listMyBookings(bot, message)
+        default:
           break
-      default:
-        break
       }
-      } catch (err) {
-        bot.replyPrivate(message, err.message)
-      }
+    } catch (err) {
+      bot.replyPrivate(message, err.message)
+    }
   })
   //Get response from modal
   controller.on('view_submission', async (bot, message) => {
