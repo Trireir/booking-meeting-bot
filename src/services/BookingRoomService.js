@@ -32,9 +32,9 @@ const BookingRoomService = {
     }))
   },
 
-  async getAuthGroup({ authId }) {
+  async getAuthGroup({ authId, roomId }) {
     const data = await BookingRoomAxios.post('/Display/AuthenticateGroup', {
-      roomId: this.getRooms()[0].id,
+      roomId: roomId,
       profileId: SERVER_PROFILE_ID,
       authId,
       isSecondaryAuth: false,
@@ -44,11 +44,34 @@ const BookingRoomService = {
   },
 
   async getMyBookings({ authId, time }) {
-    const groupId = await this.getAuthGroup({ authId })
+    const groupId = await this.getAuthGroup({
+      authId,
+      roomId: this.getRooms()[0].id,
+    })
     const rooms = this.getRooms()
     const data = await Promise.all(buildGetBookingRequests(rooms))
 
     return getMyBookings(data, groupId, rooms, time)
+  },
+
+  async bookRoom({ authId, startHour, endHour, roomId, authName, eventName }) {
+    const groupId = await this.getAuthGroup({ authId, roomId })
+
+    const response = await BookingRoomAxios.post('/Display/AddBooking', {
+      roomId: roomId,
+      profileId: SERVER_PROFILE_ID,
+      isSecondaryAuth: false,
+      utcStart: startHour,
+      utcEnd: endHour,
+      groupId: groupId,
+      contactId: 0,
+      groupName: authName,
+      eventName: eventName,
+      attendance: 1,
+      connectionName: '',
+    })
+
+    return response.Data[0]
   },
 }
 

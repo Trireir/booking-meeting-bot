@@ -20,8 +20,16 @@ const getDateFromValues = ({ hours, minutes }) => {
   return date
 }
 
+const isToday = date => {
+  const now = new Date()
+  now.setHours(0, 0, 0, 0)
+  const inputDate = new Date(date).getTime()
+  return inputDate <= now.getTime() + 86400000 && inputDate > now.getTime()
+}
+
 module.exports = {
   getTimeFromUTCStringFormatDate,
   toHourAndMinStringFormat,
   getDateFromValues,
+  isToday,
 }
