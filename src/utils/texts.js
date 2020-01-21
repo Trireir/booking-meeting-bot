@@ -2,14 +2,14 @@ module.exports = {
   FIELD_START_TIME: 'Start Time',
   FIELD_END_TIME: 'End Time',
 
-  FIELD_DATE_DATE: 'Date',
-  FIELD_DATE_SELECT_DATE: 'Select a date',
+  FIELD_DATE_LABEL: 'Date',
+  FIELD_DATE_PLACEHOLDER: 'Select a date',
 
-  FIELD_ROOM_ROOM: 'Room',
-  FIELD_ROOM_SELECT_ROOM: 'Select room',
+  FIELD_ROOM_LABEL: 'Room',
+  FIELD_ROOM_PLACEHOLDER: 'Select room',
 
-  FIELD_TITLE_TITLE: 'Title',
-  FIELD_TITLE_SELECT_TITLE: 'Meeting name',
+  FIELD_TITLE_LABEL: 'Title',
+  FIELD_TITLE_PLACEHOLDER: 'Meeting name',
 
   MODAL_SUBMIT: 'Book',
   MODAL_CANCEL: 'Cancel',

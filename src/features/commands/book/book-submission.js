@@ -8,10 +8,8 @@ const {
 
 const { SLACK_BOT_USER_OAUTH } = require('../../../../env')
 const { bookRoom } = require('../../../business/BookingRoomBusiness')
+const { isToday } = require('../../../utils/date')
 
-function isToday(date, now) {
-  return new Date(date).getTime() <= now.getTime() + 86400000
-}
 function validate(values) {
   const errors = {}
   const now = new Date()
@@ -28,7 +26,7 @@ function validate(values) {
     errors.endTime = ERRORS_HOUR_END_BEFORE_START
   } else {
     if (
-      isToday(values.date.dateValue.selected_date, now) &&
+      isToday(values.date.dateValue.selected_date) &&
       parseInt(values.endTime.endTimeValue.selected_option.value) <
         new Date().getTime()
     ) {

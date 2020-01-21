@@ -8,12 +8,12 @@ const { ROOMS } = require('../../../utils/config')
 const {
   FIELD_START_TIME,
   FIELD_END_TIME,
-  FIELD_TITLE_SELECT_TITLE,
-  FIELD_TITLE_TITLE,
-  FIELD_ROOM_SELECT_ROOM,
-  FIELD_ROOM_ROOM,
-  FIELD_DATE_DATE,
-  FIELD_DATE_SELECT_DATE,
+  FIELD_TITLE_PLACEHOLDER,
+  FIELD_TITLE_LABEL,
+  FIELD_ROOM_PLACEHOLDER,
+  FIELD_ROOM_LABEL,
+  FIELD_DATE_LABEL,
+  FIELD_DATE_PLACEHOLDER,
 } = require('../../../utils/texts')
 
 function parseRooms(rooms) {
@@ -60,21 +60,21 @@ module.exports = async function(bot, message) {
         TextInputField(
           'title',
           'titleValue',
-          FIELD_TITLE_SELECT_TITLE,
-          FIELD_TITLE_TITLE
+          FIELD_TITLE_PLACEHOLDER,
+          FIELD_TITLE_LABEL
         ),
         SelectInputField(
           'room',
           'roomValue',
-          FIELD_ROOM_SELECT_ROOM,
-          FIELD_ROOM_ROOM,
+          FIELD_ROOM_PLACEHOLDER,
+          FIELD_ROOM_LABEL,
           parseRooms(ROOMS)
         ),
         DatePickerInputField(
           'date',
           'dateValue',
-          FIELD_DATE_SELECT_DATE,
-          FIELD_DATE_DATE,
+          FIELD_DATE_PLACEHOLDER,
+          FIELD_DATE_LABEL,
           parseRooms(ROOMS)
         ),
         SelectInputField(
