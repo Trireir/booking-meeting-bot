@@ -126,6 +126,7 @@ module.exports = async function(bot, message) {
           action_id: 'titleValue',
           label: FIELD_TITLE_LABEL,
           placeholder: FIELD_TITLE_PLACEHOLDER,
+          defaultValue: 'Meeting',
         }),
         SelectInputField({
           block_id: 'room',
