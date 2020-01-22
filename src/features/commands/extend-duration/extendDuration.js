@@ -3,10 +3,12 @@ const {
   updateBooking,
 } = require('../../../business/BookingRoomBusiness')
 
+const { SLACK_BOT_USER_OAUTH } = require('../../../../env')
 const {
   EXTEND_SUCCESS,
   EXTEND_ERROR_NO_BOOKING,
   EXTEND_ERROR_UNEXPECTED,
+  BOOK_NEAR_END_TEXT,
 } = require('../../../utils/texts')
 
 const extendDuration = async (bot, message) => {
@@ -41,6 +43,15 @@ const extendDuration = async (bot, message) => {
       response.Data[0].MessageCode === 0
     ) {
       await bot.replyPrivate(message, EXTEND_SUCCESS(extendMinutes))
+      const minutesUntilEnd = 5
+      if (extendMinutes >= minutesUntilEnd) {
+        await bot.api.chat.scheduleMessage({
+          token: SLACK_BOT_USER_OAUTH,
+          channel: message.incoming_message.channelData.user_id,
+          post_at: room.endTime / 1000 + (extendMinutes - minutesUntilEnd) * 60,
+          text: BOOK_NEAR_END_TEXT,
+        })
+      }
     } else {
       await bot.replyPrivate(message, EXTEND_ERROR_UNEXPECTED)
     }
