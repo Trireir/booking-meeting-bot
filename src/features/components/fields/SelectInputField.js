@@ -1,4 +1,11 @@
-module.exports = function(block_id, action_id, label, placeholder, options) {
+module.exports = function({
+  block_id,
+  action_id,
+  label,
+  placeholder,
+  options,
+  defaultValue,
+}) {
   return {
     type: 'input',
     block_id: block_id,
@@ -11,6 +18,7 @@ module.exports = function(block_id, action_id, label, placeholder, options) {
         emoji: true,
       },
       options: options,
+      initial_option: defaultValue,
     },
     label: {
       type: 'plain_text',

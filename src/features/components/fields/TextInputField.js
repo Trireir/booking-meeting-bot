@@ -1,4 +1,4 @@
-module.exports = function(block_id, action_id, label, placeholder) {
+module.exports = function({ block_id, action_id, label, placeholder }) {
   return {
     type: 'input',
     block_id: block_id,
