@@ -2,7 +2,7 @@ const book = require('./commands/book/book-business')
 const submission = require('./commands/book/book-submission')
 const listRooms = require('./commands/list-rooms/listRoomsBusiness')
 const listMyBookings = require('./commands/list-my-bookings/listMyBookingsBusiness')
-
+const extendDuration = require('./commands/extend-duration/extendDuration')
 module.exports = function(controller) {
   //Slash Command (Have to be declared in Slack)
   controller.on('slash_command', async (bot, message) => {
@@ -15,6 +15,8 @@ module.exports = function(controller) {
           return await listRooms(bot, message)
         case '/list':
           return await listMyBookings(bot, message)
+        case '/extend':
+          return await extendDuration(bot, message)
         default:
           break
       }

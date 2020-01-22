@@ -25,4 +25,19 @@ const bookRoom = async ({ startHour, endHour, roomId, eventName }, user) => {
   })
 }
 
-module.exports = { getRoomsAvailability, getRooms, getMyBookings, bookRoom }
+const updateBooking = async ({ utcStart, utcEnd, roomId, bookingId }) => {
+  return await BookingRoomService.updateBooking({
+    utcStart,
+    utcEnd,
+    roomId,
+    bookingId,
+  })
+}
+
+module.exports = {
+  getRoomsAvailability,
+  getRooms,
+  getMyBookings,
+  bookRoom,
+  updateBooking,
+}

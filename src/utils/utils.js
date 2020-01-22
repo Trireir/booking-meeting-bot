@@ -36,6 +36,8 @@ const getMyBookings = (roomList, groupId, rooms) => {
             roomName: rooms[index].name,
             floor: rooms[index].floor,
             eventName: booking.EventName,
+            bookingId: booking.BookingID,
+            roomId: rooms[index].id,
             startTime: getTimeFromUTCStringFormatDate(
               booking.UTCReservedStartDateTime
             ),

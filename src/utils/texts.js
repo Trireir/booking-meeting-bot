@@ -25,4 +25,10 @@ module.exports = {
     "Your room book will end soon, if you wish extend the time try to use '/extend [min]', if you dont specify mins it will extend 15 min",
 
   MY_BOOKINGS_EMPTY_TEXT: 'You dont have any meeting for today',
+
+  EXTEND_SUCCESS: minutes =>
+    `Your actual booking room has been extended for ${minutes} minutes`,
+  EXTEND_ERROR_NO_BOOKING: 'You have no bookings to extend at this moment',
+  EXTEND_ERROR_UNEXPECTED:
+    'Ups, something wrong happened, please, try to check if room is available',
 }
