@@ -101,7 +101,9 @@ module.exports = async function(bot, message) {
         }`
       )
 
-      const scheduleReminderDate = Math.round(timeEnd.getTime() / 1000) - 3 * 60
+      const minutesUntilEnd = 5
+      const scheduleReminderDate =
+        Math.round(timeEnd.getTime() / 1000) - minutesUntilEnd * 60
 
       if (scheduleReminderDate * 1000 > new Date().getTime()) {
         await bot.api.chat.scheduleMessage({

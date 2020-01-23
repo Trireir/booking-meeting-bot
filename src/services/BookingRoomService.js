@@ -73,6 +73,18 @@ const BookingRoomService = {
 
     return response.Data[0]
   },
+
+  async updateBooking({ utcStart, utcEnd, roomId, bookingId }) {
+    const response = await BookingRoomAxios.post('/Display/UpdateBooking', {
+      roomId: roomId,
+      profileId: SERVER_PROFILE_ID,
+      utcStart: utcStart,
+      utcEnd: utcEnd,
+      bookingId: bookingId,
+      connectionName: '',
+    })
+    return response
+  },
 }
 
 module.exports = BookingRoomService
